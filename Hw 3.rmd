@@ -1,0 +1,179 @@
+---
+title: "Hw 3"
+author: "Akeem Ajede"
+date: "10/9/2019"
+header-includes:
+   - \DeclareUnicodeCharacter{2212}{-}
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+# Question (1)
+
+Suppose $X$ and $Y$ are random variables with nonzero means $\mu_X$ and $\mu_Y$, respectively. Let $g(\mu_X,\mu_Y) = \mu_X/\mu_Y$ . Show that:
+$E\bigg(\frac{X}{Y}\bigg)\approx\frac{\mu_X}{\mu_Y}\text{ and }\\ Var\bigg(\frac{X}{Y}\bigg)\approx\bigg(\frac{\mu_X}{\mu_Y}\bigg)^2\bigg(\frac{VarX}{\mu_X^2}+\frac{VarY}{\mu_Y^2}-2\frac{Cov(X,Y)}{\mu_X\mu_Y}\bigg)$
+
+\begin{align*}
+T=\begin{pmatrix}
+X \\
+Y
+\end{pmatrix}
+&&\theta=\begin{pmatrix}
+\mu_X \\
+\mu_Y
+\end{pmatrix}
+&&g(T)=\frac{X}{Y}
+\end{align*}
+
+\begin{align*}
+E\bigg(\frac{X}{Y}\bigg) &\approx g(\mathbf\theta)= g(\mu_X,\mu_Y)\\
+&\approx\frac{\mu_X}{\mu_Y}
+\end{align*}
+
+\begin{align*}
+Var(X/Y)&\approx\bigg[\frac{\partial g(\mathbf{\theta})}{\partial X}\bigg]^2VarX +\bigg[\frac{\partial g(\mathbf{\theta})}{\partial Y}\bigg]^2VarY+2\bigg(\frac{\partial g(\mathbf\theta)}{\partial X}\frac{\partial g(\mathbf{\theta})}{\partial Y}Cov(X,Y)\bigg)\\
+&\approx\bigg[\frac{1}{\mu_Y}\bigg]^2VarX +\bigg[-\frac{\mu_X}{\mu_Y^2}\bigg]^2VarY-2\bigg(\frac{1}{\mu_Y}\frac{\mu_X}{\mu_Y^2}Cov(X,Y)\bigg)\\
+&\approx\frac{1}{\mu_Y^2}VarX +\frac{\mu_X^2}{\mu_Y^4}VarY-2\bigg(\frac{\mu_X}{\mu_Y^3}Cov(X,Y)\bigg)\\
+&\approx\bigg(\frac{\mu_X}{\mu_Y}\bigg)^2\bigg(\frac{VarX}{\mu_X^2}+\frac{VarY}{\mu_Y^2}-2\frac{Cov(X,Y)}{\mu_X\mu_Y}\bigg)
+\end{align*}
+
+\pagebreak
+
+
+# Question (2)
+
+## (a)
+
+Use R to generate 1000 samples of sizes $n = 10, 25, 50, 100$ from Bernoulli(p) for each of the following values of $p;\mspace{6mu} p = 0.25, 0.5$ and $0.75$. For each of the specified values of $p$, plot the histograms of the sample means based on each of the 4 sample sizes. Plot each of the four on the same page using the $par(mfrow=c(2,2))$ statement in R.
+
+
+```{r}
+set.seed(1001)
+rs = 1000      #Where "rs" stands for random samples
+n = c(10, 25, 50, 100) #n stands for sample size
+p = c(0.25,0.5,0.75) #p represents Daniel Bernoulli parameter
+par(mfrow=c(2,2))
+for(j in 1:length(p))
+for(i in 1:length(n))
+    {x = rbinom(rs,n[i],p[j])/n[i] #The sum of a bernoulli distribution is a "binomial"
+    hist(x, main = paste('n = ',n[i],', p = ',p[j]),xlim=c(0,1), col = "light blue")}
+```
+
+
+## (b)
+
+A data scientist was testing the performance of a classification model using an independent data set containing 100 data points (random sample of size $n = 100$). For each observation in the testing dataset, the predicted value was computed and each point was labeled as a correct classficiation or an incorrrect classification (binary). The results were that 77 out of the 100 were correctly classified. Find a point estimate of the true correct classfication proportion of the predictive model and its associated 95% confidence interval.
+
+Point estimate of the correct classification is given as:
+
+$$\hat p=\bar {X} = \frac {77}{100} = 0.77$$
+95% C.I:
+
+$$\hat p\pm {Z}_{\frac{\alpha}{2}}.\sqrt{\frac{\hat p(1-\hat p)}{n}} = \hat p\pm 1.96.\sqrt{\frac{\hat p(1-\hat p)}{n}}=0.77\pm 1.96.\sqrt{\frac{0.77(0.23)}{100}}=(0.688,\mspace{3mu}0.853)$$
+
+
+## (c)
+
+From part (b), compute an estimate of the odds of correct classification and its associated
+95% confidence interval.
+
+$$Odds \mspace{6mu} estimate  = \hat\theta=\frac{\bar X}{1-\bar X}= \frac{0.77}{1-0.77} = 3.348$$
+
+95% C.I:
+
+$$\frac{\hat p}{1-\hat p}\pm {Z}_{\frac{\alpha}{2}}.\sqrt{\frac{\hat p}{n(1-\hat p)^3}}= \frac{\hat p}{1-\hat p} \pm1.96\sqrt{\frac{\hat p}{n(1-\hat p)^3}}=3.348\pm1.96.\sqrt{\frac{0.77}{100(0.23)^3}}=(1.789,\mspace{3mu}4.907)$$
+
+## (d)
+
+For this sample, n = 100 and x = 77, using R plot the likelihood function, i.e., the likelihood function on the vertical axis and p on the horizontol axis. Draw a vertical line at the value of p where the likelihood function is maximized.
+
+```{r}
+x<-0:100
+p<-x/100
+likelihood = function(y){dbinom(y,100,.77)}
+plot(p,likelihood(x),type='l', col = "blue")
+abline(v=.77,col= "red",lwd=1)
+```
+
+\pagebreak
+
+# Question (3)
+
+Let \X_{11},...,X_{1n_1} \overset{\text{iid}}{\thicksim} Bernoulli(\theta_1) and \X_{21},...,X_{2n_2} \overset{\text{iid}}{\thicksim} Bernoulli(\theta_2), and assume that the two samples are independent.
+
+## (a)
+
+Find the $maximum \mspace{5mu} likelihood  \mspace{5mu}  estimator$ for \mathbf{\theta}= \begin{pmatrix}
+\theta_1 \\
+\theta_2
+\end{pmatrix}
+
+\begin{align*}
+L(\theta_1 \mid \X_{11},...,X_{1n_1}) = \prod_{i=1}^n $(P^{x_i}(1-P)^{1-x_i})$\\
+& P^{\sum {x_i}}(1-P)^{\sum {1-x_i}}\\
+LL(\theta_1 \mid \X_{11},...,X_{1n_1}) = \sum{x_i}LogP+\sum ({1-x_i})Log(1-P)\\
+Score function:\\
+& S(\theta_1 \mid\vec{x}) = $\frac{\sum {x_i}}{P} - \frac{\sum({1-x_i})}{1-P} \overset{\text{set}}= 0 $\\
+& (1-P)\sum {x_i} - P(\sum({1-x_i})=0\\
+& P = \frac{1}{n}\sum {x_i}= \bar{X_1}\\
+\end {align*}
+
+Based on the assumption, 
+\begin{align*}
+\begin{pmatrix}
+\theta_1 \\
+\theta_2
+\end{pmatrix} = && \begin{pmatrix}
+\bar{X_1} \\
+\bar{X_2}
+\end{pmatrix}
+\end {align*}
+
+# (b)
+
+Find the MLE of the odds ratio between population 1 and 2, $\tau$ = $g(\mathbf{\theta})$ = $\frac{\frac{\theta_1}{1-\theta_1}}{\frac{\theta_2}{1-\theta_2}}$
+
+By using the invariance property of MLE; \mspace{mu6} $\hat\tau = g(\mathbf{\hat\theta})$ = $\frac{\frac{\bar X_1}{1-\bar X_1}}{\frac{\bar X_2}{1-\bar X_2}}$
+
+# (c)
+
+Let $\hat\tau$ be the MLE for the odds ratio and find expressions for approximate mean E(\hat\tau) and its approximate variance Var(\hat\tau).
+
+$$E(\hat\tau)= g(\mathbf{\theta}) = \frac{\frac{E(\bar X_1)}{1-E(\bar X_1)}}{\frac{E(\bar X_2)}{1-E(\bar X_2)}}$$
+
+\begin{align*}
+$Var(\hat\tau) \approx [g_{\theta_1}^\prime(\mathbf{\theta})]^2.Var(\bar X_1) + [g_{\theta_2}^\prime (\mathbf{\theta})]^2.Var(\bar X_2)] $ (cov = 0 for independent samples)\\
+& $\approx \frac{\theta_1(1-\theta_2)}{\theta_2^2(1-\theta_1)}.\bigg(\frac{1-\theta_2}{n_1(1-\theta_1)} + \frac{\theta_1}{n_2\theta_2} \bigg)$\\
+\end {align*}
+
+
+# (d)
+
+Specify the approximate distribution for $\hat\tau$.
+
+\begin{align*}
+$\tau\overset{\text{approx.}}{\thicksim} N\bigg(E(\tau),Var(\tau)\bigg)$\\
+$\hat\tau\overset{\text{d}}{\thicksim} N\bigg(E(\hat\tau),Var(\hat\tau)\bigg)$
+\end {align*}
+
+# (e)
+
+To determine the approval rating of the mayor of a very large large city, random sample of size 150 adult males was selected and an independent random sample of 150 adult
+females was selected. From these samples 100 of the females approved of the mayor and
+120 of the males approved. Compute a point estimate of the odds ratio, its standard
+error and a 95% confidence interval (interpret this interval).
+
+
+$$Odds \mspace{6mu} ratio  = g(\mathbf{\theta}) = \frac{\frac{\theta_1}{1-\theta_1}}{\frac{\theta_2}{1-\theta_2}} = \frac{\frac{4/5}{1/5}}{\frac{2/3}{1/3}} = 2 $$
+
+$$Standard \mspace{6mu} error = \sqrt{Var(\hat\tau)}= \bigg[\frac{4/5(1-(2/3))}{(2/3)^2(1-4/5))}.\bigg(\frac{1-(2/3)}{150(1-(4/5))} + \frac{4/5}{150(2/3)} \bigg) \bigg]^{0.5} = (0.057\bar 3)^{0.5} = 0.239  $$
+
+$$\frac{\frac{\theta_1}{1-\theta_1}}{\frac{\theta_2}{1-\theta_2}}\pm {Z}_{\frac{\alpha}{2}}.\sqrt{\frac{\theta_1(1-\theta_2)}{\theta_2^2(1-\theta_1)}\bigg(\frac{1-\theta_2}{n_1(1-\theta_1)} + \frac{\theta_1}{n_2\theta_2}} \bigg)= 2 \pm (1.96\times 0.239)=(1.532,\mspace{3mu} 2.468)$$
+
+The 95% C.I of the point estimate of the odds ratio suggests that the mayor has a positive approval rating (i.e., C.I > 0) across male and female adults in the city.
+
+
+
