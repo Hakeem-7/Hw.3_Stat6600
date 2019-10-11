@@ -75,7 +75,7 @@ Point estimate of the correct classification is given as:
 $$\hat p=\bar {X} = \frac {77}{100} = 0.77$$
 95% C.I:
 
-$$\hat p\pm {Z}_{\frac{\alpha}{2}}.\sqrt{\frac{\hat p(1-\hat p)}{n}} = \hat p\pm 1.96.\sqrt{\frac{\hat p(1-\hat p)}{n}}=0.77\pm 1.96.\sqrt{\frac{0.77(0.23)}{100}}=(0.688,\mspace{3mu}0.853)$$
+$$\hat p\pm 2.\sqrt{\frac{\hat p(1-\hat p)}{n}} = \hat p\pm 2.\sqrt{\frac{\hat p(1-\hat p)}{n}}=0.77\pm 2.\sqrt{\frac{0.77(0.23)}{100}}=(0.686,\mspace{3mu}0.854)$$
 
 
 ## (c)
@@ -87,7 +87,7 @@ $$Odds \mspace{6mu} estimate  = \hat\theta=\frac{\bar X}{1-\bar X}= \frac{0.77}{
 
 95% C.I:
 
-$$\frac{\hat p}{1-\hat p}\pm {Z}_{\frac{\alpha}{2}}.\sqrt{\frac{\hat p}{n(1-\hat p)^3}}= \frac{\hat p}{1-\hat p} \pm1.96\sqrt{\frac{\hat p}{n(1-\hat p)^3}}=3.348\pm1.96.\sqrt{\frac{0.77}{100(0.23)^3}}=(1.789,\mspace{3mu}4.907)$$
+$$\frac{\hat p}{1-\hat p}\pm 2.\sqrt{\frac{\hat p}{n(1-\hat p)^3}}= \frac{\hat p}{1-\hat p} \pm 2\sqrt{\frac{\hat p}{n(1-\hat p)^3}}=3.348\pm 2.\sqrt{\frac{0.77}{100(0.23)^3}}=(1.757,\mspace{3mu}4.939)$$
 
 ## (d)
 
@@ -181,9 +181,9 @@ $$Odds \mspace{6mu} ratio  = g(\mathbf{\theta}) = \frac{\frac{\theta_1}{1-\theta
 
 $$Standard \mspace{6mu} error = \sqrt{Var(\hat\tau)}= \bigg[\frac{4/5(1-(2/3))}{(2/3)^2(1-4/5))}.\bigg(\frac{1-(2/3)}{150(1-(4/5))} + \frac{4/5}{150(2/3)} \bigg) \bigg]^{0.5} = (0.057\bar 3)^{0.5} = 0.239  $$
 
-$$\frac{\frac{\theta_1}{1-\theta_1}}{\frac{\theta_2}{1-\theta_2}}\pm {Z}_{\frac{\alpha}{2}}.\sqrt{\frac{\theta_1(1-\theta_2)}{\theta_2^2(1-\theta_1)}\bigg(\frac{1-\theta_2}{n_1(1-\theta_1)} + \frac{\theta_1}{n_2\theta_2}} \bigg)= 2 \pm (1.96\times 0.239)=(1.532,\mspace{3mu} 2.468)$$
+$$\frac{\frac{\theta_1}{1-\theta_1}}{\frac{\theta_2}{1-\theta_2}}\pm 2.\sqrt{\frac{\theta_1(1-\theta_2)}{\theta_2^2(1-\theta_1)}\bigg(\frac{1-\theta_2}{n_1(1-\theta_1)} + \frac{\theta_1}{n_2\theta_2}} \bigg)= 2 \pm (2\times 0.239)=(1.522,\mspace{3mu} 2.478)$$
 
-The 95% C.I of the point estimate of the odds ratio suggests that the mayor has a positive approval rating (i.e., C.I > 0) across male and female adults in the city.
+The 95% C.I of the point estimate of the odds ratio suggests that the mayor has a positive approval rating (i.e., C.I > 0) across both male and female adults in the city.
 
 
 
