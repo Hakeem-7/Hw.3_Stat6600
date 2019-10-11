@@ -1,5 +1,5 @@
 ---
-title: "Hw 3"
+title: "Homework 3"
 author: "Akeem Ajede"
 date: "10/9/2019"
 output:
@@ -7,6 +7,7 @@ output:
   html_document:
     df_print: paged
 header-includes: \DeclareUnicodeCharacter{2212}{-}
+
 ---
 
 ```{r setup, include=FALSE}
