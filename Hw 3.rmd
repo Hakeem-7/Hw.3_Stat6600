@@ -2,9 +2,11 @@
 title: "Hw 3"
 author: "Akeem Ajede"
 date: "10/9/2019"
-header-includes:
-   - \DeclareUnicodeCharacter{2212}{-}
-output: pdf_document
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+header-includes: \DeclareUnicodeCharacter{2212}{-}
 ---
 
 ```{r setup, include=FALSE}
@@ -102,52 +104,60 @@ abline(v=.77,col= "red",lwd=1)
 
 # Question (3)
 
-Let \X_{11},...,X_{1n_1} \overset{\text{iid}}{\thicksim} Bernoulli(\theta_1) and \X_{21},...,X_{2n_2} \overset{\text{iid}}{\thicksim} Bernoulli(\theta_2), and assume that the two samples are independent.
+Let $X_{11},...,X_{1n_1}$ $\overset{\text{iid}}{\thicksim}$ Bernoulli $(\theta_1)$ and $X_{21},...,X_{2n_2}$ $\overset{\text{iid}}{\thicksim}$ Bernoulli $(\theta_2)$, and assume that the two samples are independent.
 
 ## (a)
 
-Find the $maximum \mspace{5mu} likelihood  \mspace{5mu}  estimator$ for \mathbf{\theta}= \begin{pmatrix}
-\theta_1 \\
-\theta_2
-\end{pmatrix}
+Find the maximum likelihood estimator for $\theta$.
 
 \begin{align*}
-L(\theta_1 \mid \X_{11},...,X_{1n_1}) = \prod_{i=1}^n $(P^{x_i}(1-P)^{1-x_i})$\\
-& P^{\sum {x_i}}(1-P)^{\sum {1-x_i}}\\
-LL(\theta_1 \mid \X_{11},...,X_{1n_1}) = \sum{x_i}LogP+\sum ({1-x_i})Log(1-P)\\
-Score function:\\
-& S(\theta_1 \mid\vec{x}) = $\frac{\sum {x_i}}{P} - \frac{\sum({1-x_i})}{1-P} \overset{\text{set}}= 0 $\\
-& (1-P)\sum {x_i} - P(\sum({1-x_i})=0\\
-& P = \frac{1}{n}\sum {x_i}= \bar{X_1}\\
-\end {align*}
+\mathbf{\theta}=\begin{pmatrix}
+\theta_1\\
+\theta_2
+\end{pmatrix}
+\end{align*}
 
-Based on the assumption, 
+
+
+$$L({\theta_1} {\mid X_{11},...,X_{1n_1}}) = {\prod_{i=1}^n (P^{x_i}(1-P)^{1-x_i}})$$ 
+
+$$= P^{\sum {x_i}} (1-P)^{\sum {1-x_i}}$$
+
+$$LL({\theta_1} {\mid X_{11},...,X_{1n_1}}) = \sum{x_i}LogP+\sum ({1-x_i})Log(1-P)$$
+
+$$Score function: S(\theta_1 \mid\vec{x}) = \frac{\sum {x_i}}{P} - \frac{\sum({1-x_i})}{1-P} \overset{\text{set}}= 0$$
+$$(1-P)\sum {x_i} - P(\sum({1-x_i})=0$$
+$$P = \frac{1}{n}\sum {x_i}= \bar{X_1}$$
+
+If the assumption holds, 
 \begin{align*}
 \begin{pmatrix}
-\theta_1 \\
+\theta_1\\
 \theta_2
-\end{pmatrix} = && \begin{pmatrix}
-\bar{X_1} \\
+\end{pmatrix} = & \begin{pmatrix}
+\bar{X_1}\\
 \bar{X_2}
 \end{pmatrix}
-\end {align*}
+\end{align*}
+
 
 # (b)
 
-Find the MLE of the odds ratio between population 1 and 2, $\tau$ = $g(\mathbf{\theta})$ = $\frac{\frac{\theta_1}{1-\theta_1}}{\frac{\theta_2}{1-\theta_2}}$
+Find the MLE of the odds ratio between population 1 and 2, $\tau$ = $g(\mathbf\theta) = \frac{\frac{\theta_1}{1-\theta_1}}{\frac{\theta_2}{1-\theta_2}}$
 
-By using the invariance property of MLE; \mspace{mu6} $\hat\tau = g(\mathbf{\hat\theta})$ = $\frac{\frac{\bar X_1}{1-\bar X_1}}{\frac{\bar X_2}{1-\bar X_2}}$
+By using the invariance property of MLE;$\mspace{6mu} \hat{\tau} = g(\mathbf{\hat{\theta}}) = \frac{\frac{\bar X_1}{1-\bar X_1}}{\frac{\bar X_2}{1-\bar X_2}}$
 
 # (c)
 
-Let $\hat\tau$ be the MLE for the odds ratio and find expressions for approximate mean E(\hat\tau) and its approximate variance Var(\hat\tau).
+Let $\hat\tau$ be the MLE for the odds ratio and find expressions for approximate mean E$(\hat\tau)$ and its approximate variance $Var(\hat\tau)$.
 
 $$E(\hat\tau)= g(\mathbf{\theta}) = \frac{\frac{E(\bar X_1)}{1-E(\bar X_1)}}{\frac{E(\bar X_2)}{1-E(\bar X_2)}}$$
 
 \begin{align*}
-$Var(\hat\tau) \approx [g_{\theta_1}^\prime(\mathbf{\theta})]^2.Var(\bar X_1) + [g_{\theta_2}^\prime (\mathbf{\theta})]^2.Var(\bar X_2)] $ (cov = 0 for independent samples)\\
-& $\approx \frac{\theta_1(1-\theta_2)}{\theta_2^2(1-\theta_1)}.\bigg(\frac{1-\theta_2}{n_1(1-\theta_1)} + \frac{\theta_1}{n_2\theta_2} \bigg)$\\
-\end {align*}
+Var(\hat\tau) &\approx [g_{\theta_1}^\prime(\mathbf{\theta})]^2.Var(\bar X_1) + [g_{\theta_2}^\prime (\mathbf{\theta})]^2.Var(\bar X_2)]\\
+&(cov \mspace{3mu} = \mspace{3mu} 0, \mspace{3mu} for \mspace{3mu} independent \mspace{3mu}samples)\\
+& \approx \frac{\theta_1(1-\theta_2)}{\theta_2^2(1-\theta_1)}.\bigg(\frac{1-\theta_2}{n_1(1-\theta_1)} + \frac{\theta_1}{n_2\theta_2} \bigg)
+\end{align*}
 
 
 # (d)
@@ -155,9 +165,8 @@ $Var(\hat\tau) \approx [g_{\theta_1}^\prime(\mathbf{\theta})]^2.Var(\bar X_1) + 
 Specify the approximate distribution for $\hat\tau$.
 
 \begin{align*}
-$\tau\overset{\text{approx.}}{\thicksim} N\bigg(E(\tau),Var(\tau)\bigg)$\\
-$\hat\tau\overset{\text{d}}{\thicksim} N\bigg(E(\hat\tau),Var(\hat\tau)\bigg)$
-\end {align*}
+\hat\tau\overset{\text{d}}{\thicksim} N\bigg(E(\hat\tau),Var(\hat\tau)\bigg)
+\end{align*}
 
 # (e)
 
